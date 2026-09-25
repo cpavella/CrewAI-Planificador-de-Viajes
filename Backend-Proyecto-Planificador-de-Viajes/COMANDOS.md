@@ -16,8 +16,8 @@ Luego abre http://localhost:5173 en el navegador.
 ## Comando para levantar el endpoint en Local
 uv sync
 
-uv run uvicorn backend_proyecto_planificador_de_viajes.main:app --app-dir src --host 127.0.0.1 --port 8005 --reload
 
+uv run python -m uvicorn backend_proyecto_planificador_de_viajes.main:app --app-dir .\src --host 127.0.0.1 --port 8005 --reload
 # ================================================================
 
 # Despliegue sobre VPS por Contenedor de Docker

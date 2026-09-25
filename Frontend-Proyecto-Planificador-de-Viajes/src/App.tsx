@@ -8,11 +8,10 @@ import AgentProgress from "./components/AgentProgress";
 import TypingIndicator from "./components/TypingIndicator";
 import DestImage from "./components/DestImage";
 import { chat } from "./lib/api";
-import { destinationImage } from "./lib/images";
 import { EMPTY_FILTERS, composePrompt } from "./types";
 import type { ChatMessage, TripFilters as Filters } from "./types";
 
-const USER_NAME = "Kevin";
+const USER_NAME = "Patricia";
 
 // Segundos de espera a partir de los cuales asumimos que el agente lanzó el
 // crew y cambiamos el indicador de "escribiendo" a la línea de tiempo. Un turno
@@ -20,29 +19,37 @@ const USER_NAME = "Kevin";
 const SEGUNDOS_HASTA_CREW = 6;
 
 // Tarjetas de inspiración de la pantalla de bienvenida
-const INSPIRATION: { title: string; query: string; prompt: string }[] = [
+const INSPIRATION: { title: string; 
+  query: string; 
+  prompt: string;
+  image: string;
+ }[] = [
   {
     title: "Costa de Italia en pareja",
     query: "italy amalfi coast",
     prompt:
       "Un viaje de 10 días por la costa de Italia para una pareja, enfocado en comida y cultura.",
+    image: "/images/italia.jpg",
   },
   {
     title: "Naturaleza en Costa Rica",
     query: "costa rica rainforest",
     prompt:
       "Una aventura de 2 semanas en Costa Rica para amantes de la naturaleza con presupuesto moderado.",
+    image: "/images/costa-rica.jpg",
   },
   {
     title: "3 días en Nueva York",
     query: "new york city",
     prompt: "¿Qué puedo hacer en 3 días en Nueva York con un presupuesto de $500?",
+    image: "/images/nueva-york.jpg",
   },
   {
     title: "Cusco e Inti Raymi",
     query: "cusco peru",
     prompt:
       "4 días en Cusco en junio para vivir el Inti Raymi, historia inca y gastronomía.",
+    image: "/images/cusco.jpg",
   },
 ];
 
@@ -198,16 +205,12 @@ export default function App() {
                       key={item.title}
                       type="button"
                       onClick={() => handleSend(item.prompt)}
-                      className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md"
+                      className="group flex min-w-0 flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white text-left shadow-sm transition-all hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md"
                     >
                       <DestImage
-                        src={destinationImage(item.query, {
-                          w: 400,
-                          h: 300,
-                          seed: item.title,
-                        })}
+                        src={item.image}
                         alt={item.title}
-                        className="h-24 w-full"
+                        className="h-24 w-full shrink-0"
                       />
                       <span className="block p-3 text-xs font-semibold leading-snug text-slate-700 group-hover:text-brand-700">
                         {item.title}
