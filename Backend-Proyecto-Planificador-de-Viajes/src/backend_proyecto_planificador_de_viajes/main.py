@@ -21,6 +21,7 @@ from contextlib import asynccontextmanager
 from datetime import date
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from starlette.responses import JSONResponse
 
@@ -67,6 +68,19 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+cors_origins = [
+    origin.strip()
+    for origin in os.getenv("CORS_ORIGINS", "").split(",")
+    if origin.strip()
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=cors_origins,
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class TripRequest(BaseModel):
     prompt: str
